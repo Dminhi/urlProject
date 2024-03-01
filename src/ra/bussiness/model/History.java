@@ -5,6 +5,7 @@ import ra.bussiness.util.IOFile;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class History implements Serializable {
@@ -136,9 +137,10 @@ public class History implements Serializable {
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 ", user=" + user.getFullName() +
-                ", songList=" + songList +
+                ", songList=" + songList.stream().map(Song::getProductName).reduce("| ",(e1,e2)->e1+e2+" |") +
                 ", check=" + check +
-                ", historyList=" + historyList +
+                ", historyList=" + historyList.stream().map(e->String.valueOf(e.getHistoryId())).reduce("| ",(e1,e2)->e1+e2+" |")+
                 '}';
+
     }
 }

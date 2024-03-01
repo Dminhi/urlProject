@@ -10,16 +10,17 @@ public class UserManagement {
 
     public static void userControler() {
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý người dùng                   |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị danh sách người dùng     |");
-            System.out.println("| 2. Thêm mới tài khoản                |");
-            System.out.println("| 3. Tìm kiếm                          |");
-            System.out.println("| 4. Đổi trạng thái người dùng         |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔══════════════════════════════════════╗");
+            System.out.println("║ Quản lý người dùng                   ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ 0. Quay lại                          ║");
+            System.out.println("║ 1. Hiển thị danh sách người dùng     ║");
+            System.out.println("║ 2. Thêm mới tài khoản                ║");
+            System.out.println("║ 3. Tìm kiếm                          ║");
+            System.out.println("║ 4. Đổi trạng thái người dùng         ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                   ║");
+            System.out.println("╚══════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:
@@ -77,7 +78,7 @@ public class UserManagement {
         userService.changeStatusUserById(id);
     }
     public static void findUserById(){
-        System.out.println("Nhập id sản phẩm cần tìm");
+        System.out.println("Nhập id người dùng cần tìm");
         int idUser = InputMethods.getInteger();
         Users findUser = userService.findById(idUser);
         if (findUser == null){

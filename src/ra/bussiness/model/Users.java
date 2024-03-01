@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Users implements Serializable {
     private int usersId;
-    private int accountType = 1;
+    private boolean accountType = true;
     private String userName, email, fullName, password, phone;
     private String createdAt = FormatDate.formattedDate(), updatedAt = null;
 
@@ -27,7 +27,7 @@ public class Users implements Serializable {
 
     }
 
-    public Users(int usersId, int accountType, String userName, String email, String fullName, String password, String phone, String createdAt, String updatedAt, boolean status, boolean role, List<Song> favouriteSong, List<Song> myAlbum) {
+    public Users(int usersId, boolean accountType, String userName, String email, String fullName, String password, String phone, String createdAt, String updatedAt, boolean status, boolean role, List<Song> favouriteSong, List<Song> myAlbum) {
         this.usersId = usersId;
         this.accountType = accountType;
         this.userName = userName;
@@ -62,11 +62,11 @@ public class Users implements Serializable {
         this.usersId = usersId;
     }
 
-    public int getAccountType() {
+    public boolean getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(int accountType) {
+    public void setAccountType(boolean accountType) {
         this.accountType = accountType;
     }
 
@@ -161,7 +161,7 @@ public class Users implements Serializable {
     public String toString() {
         return "Users[" +
                 "usersId : " + usersId +
-                ", accountType : " + accountType +
+                ", accountType : " + (accountType?"Thường":"VIP") +
                 ", userName : '" + userName + '\'' +
                 ", email : '" + email + '\'' +
                 ", fullName : '" + fullName + '\'' +
@@ -171,8 +171,7 @@ public class Users implements Serializable {
                 ", updatedAt : '" + updatedAt + '\'' +
                 ", status : " + status +
                 ", role : " + role +
-                ", favouriteSong : " + favouriteSong +
-                ", myAlbum : " + myAlbum +
+                ", favouriteSong : " + favouriteSong.stream().map(Song::getProductName).reduce(" |",(e1,e2)->e1+", "+e2)+" |" +
                 '}';
     }
 

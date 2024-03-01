@@ -10,8 +10,6 @@ public class Singer implements Serializable {
     private int singerId;
     private String singerName, description;
     private boolean status = true;
-    private List<Song> listSong;
-    private List<Album> album;
 
 
 
@@ -23,8 +21,6 @@ public class Singer implements Serializable {
         this.singerName = singerName;
         this.description = description;
         this.status = status;
-        this.listSong = listSong;
-        this.album = album;
     }
 
     public int getSingerId() {
@@ -59,21 +55,7 @@ public class Singer implements Serializable {
         this.status = status;
     }
 
-    public List<Song> getListSong() {
-        return listSong;
-    }
 
-    public void setListSong(List<Song> listSong) {
-        this.listSong = listSong;
-    }
-
-    public List<Album> getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(List<Album> album) {
-        this.album = album;
-    }
 
     @Override
     public String toString() {
@@ -81,9 +63,7 @@ public class Singer implements Serializable {
                 "singerId : " + singerId +
                 ", singerName : '" + singerName + '\'' +
                 ", description : '" + description + '\'' +
-                ", status : " + status +
-                ", listSong : " + listSong +
-                ", album : " + album +
+                ", status : " + (status?"Đang hoạt động":"Không hoạt động") +
                 ']';
     }
     public void inputData(){

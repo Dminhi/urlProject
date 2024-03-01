@@ -14,18 +14,19 @@ public class AlbumManagement {
     static AlbumServiceImplement albumService = new AlbumServiceImplement();
     public static void AlbumController(){
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý album                        |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị danh sách album          |");
-            System.out.println("| 2. Thêm mới album                    |");
-            System.out.println("| 3. Sửa thông tin album               |");
-            System.out.println("| 4. Xoá album                         |");
-            System.out.println("| 5. Tìm kiếm album                    |");
-            System.out.println("| 6. Tìm kiếm theo tên                 |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔════════════════════════════════════════╗");
+            System.out.println("║ Quản lý album                          ║");
+            System.out.println("║----------------------------------------║");
+            System.out.println("║ 0. Quay lại                            ║");
+            System.out.println("║ 1. Hiển thị danh sách album            ║");
+            System.out.println("║ 2. Thêm mới album                      ║");
+            System.out.println("║ 3. Sửa thông tin album                 ║");
+            System.out.println("║ 4. Xoá album                           ║");
+            System.out.println("║ 5. Tìm kiếm album                      ║");
+            System.out.println("║ 6. Tìm kiếm theo tên                   ║");
+            System.out.println("║----------------------------------------║");
+            System.out.println("║ Chọn một tùy chọn:                     ║");
+            System.out.println("╚════════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:
@@ -62,7 +63,7 @@ public class AlbumManagement {
             albumService.save(newAlbum);
             System.out.println();
         }
-        System.out.println("Đã thêm mới " + quantity + " ca sĩ");
+        System.out.println("Đã thêm mới " + quantity + " album");
     }
     public static void displayAlbum(){
         if (albumService.findAll().isEmpty()){
@@ -74,7 +75,7 @@ public class AlbumManagement {
         }
     }
     public static void updateAlbum(){
-        System.out.println("Nhập id danh muc cần sửa");
+        System.out.println("Nhập id album cần sửa");
         int idAlbum = InputMethods.getInteger();
         Album editAlbum = albumService.findById(idAlbum);
         if (editAlbum == null){
@@ -111,7 +112,7 @@ public class AlbumManagement {
         System.out.println(findAlbum);;
     }
     public static void findAlbumByName() {
-        System.out.println("Nhập tên tài khoản cần tìm kiếm");
+        System.out.println("Nhập tên album cần tìm kiếm");
         String albumName = InputMethods.getString();
         System.out.println(albumService.findByName(albumName));
     }

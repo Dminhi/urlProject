@@ -8,18 +8,19 @@ public class SingerManagement {
     static SingerServiceImplement singerService = new SingerServiceImplement();
     public static void SingerController(){
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý ca sỹ                        |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị danh sách ca sĩ          |");
-            System.out.println("| 2. Thêm mới ca sĩ                    |");
-            System.out.println("| 3. Sửa thông tin ca sĩ               |");
-            System.out.println("| 4. Xoá ca sĩ                         |");
-            System.out.println("| 5. Tìm kiếm ca sĩ theo id            |");
-            System.out.println("| 6. Tìm kiếm ca sĩ theo tên           |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔══════════════════════════════════════╗");
+            System.out.println("║ Quản lý ca sỹ                        ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ 0. Quay lại                          ║");
+            System.out.println("║ 1. Hiển thị danh sách ca sĩ          ║");
+            System.out.println("║ 2. Thêm mới ca sĩ                    ║");
+            System.out.println("║ 3. Sửa thông tin ca sĩ               ║");
+            System.out.println("║ 4. Xoá ca sĩ                         ║");
+            System.out.println("║ 5. Tìm kiếm ca sĩ theo id            ║");
+            System.out.println("║ 6. Tìm kiếm ca sĩ theo tên           ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                   ║");
+            System.out.println("╚══════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:

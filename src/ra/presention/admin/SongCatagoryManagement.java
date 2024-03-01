@@ -1,28 +1,33 @@
 package ra.presention.admin;
 
 import ra.bussiness.model.Singer;
+import ra.bussiness.model.Song;
 import ra.bussiness.model.SongCatagory;
 import ra.bussiness.service.admin.service.SingerServiceImplement;
 import ra.bussiness.service.admin.service.SongCatagoryImplementService;
+import ra.bussiness.util.IOFile;
 import ra.bussiness.util.InputMethods;
+
+import java.util.List;
 
 public class SongCatagoryManagement {
     static SongCatagoryImplementService songCatagoryService = new SongCatagoryImplementService();
 
     public static void SongCatagoryController() {
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý danh mục bài hát             |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị danh mục bài hát         |");
-            System.out.println("| 2. Thêm mới danh mục bài hát         |");
-            System.out.println("| 3. Sửa thông tin danh mục bài hát    |");
-            System.out.println("| 4. Xoá danh mục                      |");
-            System.out.println("| 5. Tìm kiếm danh mục theo id         |");
-            System.out.println("| 6. Tìm kiếm danh mục theo tên        |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔══════════════════════════════════════╗");
+            System.out.println("║ Quản lý danh mục bài hát             ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ 0. Quay lại                          ║");
+            System.out.println("║ 1. Hiển thị danh mục bài hát         ║");
+            System.out.println("║ 2. Thêm mới danh mục bài hát         ║");
+            System.out.println("║ 3. Sửa thông tin danh mục bài hát    ║");
+            System.out.println("║ 4. Xoá danh mục                      ║");
+            System.out.println("║ 5. Tìm kiếm danh mục theo id         ║");
+            System.out.println("║ 6. Tìm kiếm danh mục theo tên        ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                   ║");
+            System.out.println("╚══════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:
@@ -91,6 +96,7 @@ public class SongCatagoryManagement {
     }
 
     public static void deleteSongCatagory() {
+        List<Song> songList = IOFile.readFromFile(IOFile.SONGS_PATH);
         System.out.println("Nhập id danh muc cần xoá");
         int idSongCatagory = InputMethods.getInteger();
         SongCatagory deleteSongCatagory = songCatagoryService.findById(idSongCatagory);
@@ -98,9 +104,18 @@ public class SongCatagoryManagement {
             System.out.println("Không tồn tại id");
             return;
         }
-        songCatagoryService.deleteById(idSongCatagory);
-        System.out.println("Xoá thành công");
-
+        boolean flag = true;
+        for (Song song : songList) {
+            if (song.getSongCatagory().getIdCatagory() == idSongCatagory) {
+                flag = false;
+                System.out.println("Không thể xoá danh mục đã có trong bài hát");
+                break;
+            }
+        }
+        if (flag) {
+            songCatagoryService.deleteById(idSongCatagory);
+            System.out.println("Xoá thành công");
+        }
     }
 
     public static void findSongCatagory() {
@@ -120,4 +135,7 @@ public class SongCatagoryManagement {
         String songCatagoryName = InputMethods.getString();
         System.out.println(songCatagoryService.findByName(songCatagoryName));
     }
+
+
 }
+

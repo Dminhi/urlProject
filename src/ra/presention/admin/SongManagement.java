@@ -14,19 +14,20 @@ public class SongManagement {
 
     public static void SongController() {
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý bài hát                      |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị danh sách bài hát        |");
-            System.out.println("| 2. Thêm mới bài hát                  |");
-            System.out.println("| 3. Sửa thông tin bài hát             |");
-            System.out.println("| 4. Xoá bài hát                       |");
-            System.out.println("| 5. Tìm kiếm bài hát                  |");
-            System.out.println("| 6. Tìm kiếm bài hát theo tên         |");
-            System.out.println("| 7. Thay đổi trạng thái bài hát         |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔══════════════════════════════════════╗");
+            System.out.println("║ Quản lý bài hát                      ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ 0. Quay lại                          ║");
+            System.out.println("║ 1. Hiển thị danh sách bài hát        ║");
+            System.out.println("║ 2. Thêm mới bài hát                  ║");
+            System.out.println("║ 3. Sửa thông tin bài hát             ║");
+            System.out.println("║ 4. Xoá bài hát                       ║");
+            System.out.println("║ 5. Tìm kiếm bài hát                  ║");
+            System.out.println("║ 6. Tìm kiếm bài hát theo tên         ║");
+            System.out.println("║ 7. Thay đổi trạng thái bài hát       ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                   ║");
+            System.out.println("╚══════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:
@@ -68,7 +69,7 @@ public class SongManagement {
             songService.save(newSong);
             System.out.println();
         }
-        System.out.println("Đã thêm mới " + quantity + " ca sĩ");
+        System.out.println("Đã thêm mới " + quantity + " bài hát");
     }
 
     public static void displaySong() {
@@ -102,7 +103,7 @@ public class SongManagement {
     }
 
     public static void deleteSong() {
-        System.out.println("Nhập id danh muc cần xoá");
+        System.out.println("Nhập id bài hát cần xoá");
         int idSong = InputMethods.getInteger();
         Song deleteSong = songService.findById(idSong);
         if (deleteSong == null) {
@@ -115,7 +116,7 @@ public class SongManagement {
     }
 
     public static void findSong() {
-        System.out.println("Nhập id sản phẩm cần tìm");
+        System.out.println("Nhập id bài hát cần tìm");
         int idSong = InputMethods.getInteger();
         Song findSong = songService.findById(idSong);
         if (findSong == null) {
@@ -127,7 +128,7 @@ public class SongManagement {
     }
 
     public static void findSongByName() {
-        System.out.println("Nhập tên tài khoản cần tìm kiếm");
+        System.out.println("Nhập tên bài hát cần tìm kiếm");
         String songName = InputMethods.getString();
         System.out.println(songService.findByName(songName));
     }

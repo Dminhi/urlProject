@@ -15,12 +15,10 @@ public class Album implements Serializable {
     private int id;
     private String name,description,image;
     private Singer singer;
-    private List<Song> song = new ArrayList<>();
 
     private double albumPrice;
 
     public Album() {
-
     }
 
     public Album(int id, String name, String description, String image, Singer singer, List<Song> song, double albumPrice) {
@@ -29,7 +27,6 @@ public class Album implements Serializable {
         this.description = description;
         this.image = image;
         this.singer = singer;
-        this.song = song;
         this.albumPrice = albumPrice;
     }
 
@@ -42,6 +39,9 @@ public class Album implements Serializable {
     }
 
     public String getName() {
+        if (name == null) {
+            name = "null";
+        }
         return name;
     }
 
@@ -81,13 +81,6 @@ public class Album implements Serializable {
         this.singer = singer;
     }
 
-    public List<Song> getSong() {
-        return song;
-    }
-
-    public void setSong(List<Song> song) {
-        this.song = song;
-    }
 
     @Override
     public String toString() {
@@ -95,9 +88,7 @@ public class Album implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
                 ", singer=" + singer.getSingerName() +
-                ", song=" + Arrays.toString(song.stream().map(Song::getProductName).toList().toArray()) +
                 ", albumPrice=" + albumPrice +
                 '}';
     }
@@ -122,23 +113,7 @@ public class Album implements Serializable {
                 System.err.println("Tên Album không được để trống");
             }
         }
-
-
-        System.out.println("Danh sách bài hát");
-        for (Song songName : SongServiceImplement.songList) {
-            System.out.println(songName);
-        }
-        System.out.println("Nhập số lượng bài hát muốn thêm vào album");
-        int quantity = InputMethods.getInteger();
-        for (int i = 0; i < quantity; i++) {
-            System.out.println("Nhập id bài hát thêm vào Album");
-            int idSong = InputMethods.getInteger();
-            for (Song c : SongServiceImplement.songList) {
-                if (c.getSongId() == idSong) {
-                    this.song.add(c);
-                }
-            }
-        }
+        
 
 
         System.out.println("Nhập mô tả Album");

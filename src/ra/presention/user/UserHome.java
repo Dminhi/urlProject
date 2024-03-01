@@ -30,25 +30,24 @@ public class UserHome {
         SongServiceImplement songService = new SongServiceImplement();
         SongCatagoryImplementService songCatagoryService = new SongCatagoryImplementService();
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Chào mừng " + userLogin.getFullName() + " đến với Trang chủ|");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Đăng xuất                         |");
-            System.out.println("| 1. Tìm kiếm bài hát/ca sĩ/album      |");
-            System.out.println("| 2. Hiển thị bài hát                  |");
-            System.out.println("| 3. Hiển thị bài hát trending         |");
-            System.out.println("| 4. Hiển thị ca sĩ trending           |");
-            System.out.println("| 5. Hiển thị album trending           |");
-            System.out.println("| 6. Danh sách các bài hát đã mua      |");
-            System.out.println("| 7. Hiển thị bài hát theo danh mục    |");
-            System.out.println("| 8. Công cụ tìm kiếm nâng cao         |");
-            System.out.println("| 9. Mua bài hát                       |");
-            System.out.println("| 10. Thêm vào yêu thích               |");
-            System.out.println("| 11. Trang bài hát yêu thích          |");
-            System.out.println("| 12. Quản lý thông tin cá nhân        |");
-            System.out.println("|--------------------------------------");
-
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔════════════════════════════════════════════╗");
+            System.out.println("║ Chào mừng " + userLogin.getFullName() + " đến với Trang chủ");
+            System.out.println("║════════════════════════════════════════════║");
+            System.out.println("║ 0. Đăng xuất                               ║");
+            System.out.println("║ 1. Tìm kiếm bài hát/ca sĩ/album            ║");
+            System.out.println("║ 2. Hiển thị bài hát                        ║");
+            System.out.println("║ 3. Hiển thị bài hát trending               ║");
+            System.out.println("║ 4. Hiển thị ca sĩ trending                 ║");
+            System.out.println("║ 5. Hiển thị album trending                 ║");
+            System.out.println("║ 6. Danh sách các bài hát đã mua            ║");
+            System.out.println("║ 7. Hiển thị bài hát theo danh mục          ║");
+            System.out.println("║ 8. Mua bài hát                             ║");
+            System.out.println("║ 9. Thêm vào yêu thích                      ║");
+            System.out.println("║ 10. Trang bài hát yêu thích                ║");
+            System.out.println("║ 11. Quản lý thông tin cá nhân              ║");
+            System.out.println("║════════════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                         ║");
+            System.out.println("╚════════════════════════════════════════════╝\033[0m");
 
             byte choice = InputMethods.getByte();
             switch (choice) {
@@ -76,17 +75,15 @@ public class UserHome {
                     displaySongByCatagory();
                     break;
                 case 8:
-                    break;
-                case 9:
                     buySong();
                     break;
-                case 10:
+                case 9:
                     addFavouriteSong();
                     break;
-                case 11:
+                case 10:
                     FavouriteSong();
                     break;
-                case 12:
+                case 11:
                     UserInfomation.UserInfomation();
                     break;
 
@@ -98,23 +95,14 @@ public class UserHome {
 
     public static void findByName() {
         System.out.println("Nhập tên tìm kiếm");
-        String searchName = InputMethods.getString();
+        String searchName = InputMethods.getString().toLowerCase();
         boolean flag = true;
 
-        for (Album album : albumList) {
-            if (album.getName().contains(searchName) || album.getSinger().getSingerName().contains(searchName)) {
-                System.out.println(album);
+        for (Song song : songList) {
+            if (song.getAlbum().getName().toLowerCase().contains(searchName) || song.getProductName().toLowerCase().contains(searchName) || song.getSingerName().getSingerName().toLowerCase().contains(searchName)) {
+                System.out.println(song + "\n");
                 flag = false;
             }
-
-            for (Song song : album.getSong()) {
-                if (song.getProductName().contains(searchName)) {
-                    System.out.println(album);
-                    flag = false;
-                    break; // Ngừng kiểm tra các bài hát nếu đã in album một lần
-                }
-            }
-
             if (!flag) {
                 break; // Ngừng kiểm tra các album nếu đã in ít nhất một lần
             }
@@ -162,6 +150,7 @@ public class UserHome {
     }
 
     public static void buySong() {
+        List<History> historyList = IOFile.readFromFile(IOFile.HISTORY_PATH);
         List<Song> listSong = new ArrayList<>();
         System.out.println("Danh sách bài hát");
         displayActiveSong();
@@ -189,7 +178,7 @@ public class UserHome {
         }
         double totalPrice = 0;
         for (Song song : listSong) {
-            totalPrice+=song.getSongPrice();
+            totalPrice += song.getSongPrice();
         }
         History history = new History();
         history.setSongList(listSong);
@@ -215,14 +204,19 @@ public class UserHome {
     }
 
     public static void displayBoughtSong() {
-        for (History history : historyList) {
-            if (history.getCheck() == E.ACCEPT && history.getUser().getUsersId() == userLogin.getUsersId()) {
-                System.out.println(history.getSongList());
-            }
+        List<History>historyList=IOFile.readFromFile(IOFile.HISTORY_PATH);
+            System.out.println("Danh sách bài đã mua");
+            for (History history : historyList) {
+                if (history.getCheck() == E.ACCEPT && history.getUser().getUsersId() == userLogin.getUsersId()) {
+                    System.out.println(history.getSongList() + "\n");
+                }
+
         }
     }
 
     public static void addFavouriteSong() {
+        Users userLogin = IOFile.readUserLoginFromFile(IOFile.USERSLOGIN_PATH);
+
         System.out.println("Danh sách bài hát");
         displayActiveSong();
         System.out.println("Nhập số lượng bài hát yêu thích muốn thêm vào");
@@ -251,14 +245,19 @@ public class UserHome {
                 }
             }
         }
+        IOFile.writeUserLoginToFile(IOFile.USERSLOGIN_PATH, userLogin);
         UserServiceImplement.usersList.set(UserServiceImplement.usersList.indexOf(userService.findById(userLogin.getUsersId())), userLogin);
         IOFile.writeToFile(IOFile.USERS_PATH, UserServiceImplement.usersList);
     }
 
     public static void FavouriteSong() {
         Users userLogin = IOFile.readUserLoginFromFile(IOFile.USERSLOGIN_PATH);
-        for (Song song : userLogin.getFavouriteSong()) {
-            System.out.println(song);
+        if (userLogin.getFavouriteSong().isEmpty()) {
+            System.out.println("Danh sách rỗng");
+        } else {
+            for (Song song : userLogin.getFavouriteSong()) {
+                System.out.println(song);
+            }
         }
     }
 
@@ -285,6 +284,7 @@ public class UserHome {
         }
 
         // In Map đã sắp xếp
+        System.out.println("Danh sách bài hát trending");
         for (Map.Entry<String, Integer> songIntegerEntry : sortedMap.entrySet()) {
             System.out.println(songIntegerEntry);
         }
@@ -313,12 +313,43 @@ public class UserHome {
         }
 
         // In Map đã sắp xếp
+        System.out.println("Danh sách ca sĩ trending");
+
         for (Map.Entry<String, Integer> singerIntegerEntry : sortedMap.entrySet()) {
             System.out.println(singerIntegerEntry);
         }
     }
 
     public static void displayTrendingAlbum() {
+        Map<String, Integer> albumIntegerMap = new HashMap<>();
+        List<Users> userList = IOFile.readFromFile(IOFile.USERS_PATH);
+        for (Users users : userList) {
+            for (Song song : users.getFavouriteSong()) {
+                albumIntegerMap.put(song.getAlbum().getName(), albumIntegerMap.getOrDefault(song.getAlbum().getName(), 0) + 1);
+            }
+        }
+        // Chuyển Map thành List<Map.Entry>
+
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(albumIntegerMap.entrySet());
+
+        // Sắp xếp List bằng Comparator giảm dần theo giá trị
+
+        entryList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        // Tạo một Map mới từ List đã sắp xếp
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        System.out.println("Danh sách album trending");
+
+        // In Map đã sắp xếp
+        for (Map.Entry<String, Integer> albumIntegerEntry : sortedMap.entrySet()) {
+            if (!Objects.equals(albumIntegerEntry.getKey(), "null")) {
+                System.out.println(albumIntegerEntry);
+            }
+        }
     }
 }
 

@@ -1,9 +1,6 @@
 package ra.bussiness.model;
 
-import ra.bussiness.service.admin.service.SingerServiceImplement;
-import ra.bussiness.service.admin.service.SongCatagoryImplementService;
-import ra.bussiness.service.admin.service.SongServiceImplement;
-import ra.bussiness.service.admin.service.UserServiceImplement;
+import ra.bussiness.service.admin.service.*;
 import ra.bussiness.util.FormatDate;
 import ra.bussiness.util.InputMethods;
 import ra.bussiness.util.Validation;
@@ -72,6 +69,9 @@ public class Song implements Serializable {
     }
 
     public Album getAlbum() {
+        if (album == null) {
+            album = new Album();
+        }
         return album;
     }
 
@@ -151,14 +151,12 @@ public class Song implements Serializable {
                 ", singerName : " + singerName.getSingerName() +
                 ", productName : '" + productName + '\'' +
                 ", description : '" + description + '\'' +
-                ", source : '" + source + '\'' +
                 ", createdAt : '" + createdAt + '\'' +
                 ", updatedAt : '" + updatedAt + '\'' +
-                ", image : " + image +
                 ", songPrice : " + songPrice +
                 ", songCatagory : " + songCatagory.getCatagoryName() +
-                ", activeSong : " + activeSong +
-                ", album : " + album +
+                ", activeSong : " + (activeSong?"Đang hoạt đông":"Không hoạt động") +
+                ", album : " + (album==null?"null":album.getName()) +
                 "}";
     }
 
@@ -198,24 +196,23 @@ public class Song implements Serializable {
                 if (c.getSingerId() == idSinger) {
                     this.singerName = c;
                     System.out.println("Thêm ca sĩ thành công");
-                    check=false;
+                    check = false;
                     break;
                 }
             }
-            if(check){
+            if (check) {
                 System.err.println("Id không tồn tại");
-            }else break;
+            } else break;
         }
 
-
-        if (SongCatagoryImplementService.songCatagoryList.isEmpty()) {
-            System.out.println("Danh mục bài hát rỗng");
+        SongCatagoryImplementService catagoryService = new SongCatagoryImplementService();
+        if (catagoryService.findAll().isEmpty()) {
+            System.err.println("Danh mục bài hát rỗng");
         }
-
         boolean flag = true;
         while (true) {
             System.out.println("Danh sách danh mục ");
-            for (SongCatagory songCatagory : SongCatagoryImplementService.songCatagoryList) {
+            for (SongCatagory songCatagory : catagoryService.findAll()) {
                 System.out.println(songCatagory);
             }
             System.out.println("Nhập id danh mục");
@@ -245,6 +242,36 @@ public class Song implements Serializable {
             }
             System.out.println("Giá bài hát không được để trống");
 
+        }
+        AlbumServiceImplement albumService = new AlbumServiceImplement();
+        System.out.println("Có muốn thêm bài hát vào album không \n 1 : Có \n 2: Không");
+        int choice = InputMethods.getInteger();
+        switch (choice) {
+            case 1:
+                while (true) {
+                    System.out.println("Danh sách album ");
+                    for (Album album : albumService.findAll()) {
+                        System.out.println(album);
+                    }
+                    System.out.println("Nhập id album");
+                    int idAlbum = InputMethods.getInteger();
+                    for (Album a : AlbumServiceImplement.albumList) {
+                        if (a.getId() == idAlbum) {
+                            this.album = a;
+                            System.out.println("Thêm vào danh mục thành công");
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        System.err.println("Id không tồn tại");
+                    } else break;
+                }
+                break;
+            case 2:
+                break;
+            default:
+                System.out.println("Mời chọn lại");
         }
     }
 }

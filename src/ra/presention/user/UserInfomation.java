@@ -17,15 +17,16 @@ public class UserInfomation {
     public static void UserInfomation() {
         Users users = IOFile.readUserLoginFromFile(IOFile.USERSLOGIN_PATH);
         while (true) {
-            System.out.println("---------------------------------------");
-            System.out.println("| Quản lý thông tin cá nhân            |");
-            System.out.println("|--------------------------------------|");
-            System.out.println("| 0. Quay lại                          |");
-            System.out.println("| 1. Hiển thị thông tin cá nhân        |");
-            System.out.println("| 2. Chỉnh sửa thông tin cá nhân       |");
-            System.out.println("| 3. Đổi mật khẩu                      |");
-            System.out.println("|--------------------------------------");
-            System.out.println("Chọn một tùy chọn: ");
+            System.out.println("\033[34m╔══════════════════════════════════════╗");
+            System.out.println("║ Quản lý thông tin cá nhân            ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ 0. Quay lại                          ║");
+            System.out.println("║ 1. Hiển thị thông tin cá nhân        ║");
+            System.out.println("║ 2. Chỉnh sửa thông tin cá nhân       ║");
+            System.out.println("║ 3. Đổi mật khẩu                      ║");
+            System.out.println("║══════════════════════════════════════║");
+            System.out.println("║ Chọn một tùy chọn:                   ║");
+            System.out.println("╚══════════════════════════════════════╝\033[0m");
             byte choice = InputMethods.getByte();
             switch (choice) {
                 case 0:

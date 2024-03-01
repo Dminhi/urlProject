@@ -30,6 +30,7 @@ public class UserServiceImplement implements IUserService {
 
     @Override
     public Users login(String userName, String password) {
+        usersList = IOFile.readFromFile(IOFile.USERS_PATH);
         for (Users users : usersList) {
             if (users.getUserName().equals(userName) && users.getPassword().equals(HashCode.hashPassword(password))) {
                 return users;
